@@ -7,7 +7,7 @@ def annotate_data(data):
     """
     Annotates the sentences using syntaxnet as a RESTful API.
     :param data: The sentences to be annotated
-    :return: The parsed sentences and compressions
+    :return: The parsed sentences.
     """
     sentences = []
     start = time.time()
@@ -65,9 +65,9 @@ def filter_punctuation_marks(sequence):
 
 def generate_matrix(sentence):
     """
-    Transforms given sentence into a matrix.
+    Transforms a sentence into a matrix scheme.
     :param sentence: The original sentence as a sequence of word tokens.
-    :return: The labelled feature matrix
+    :return: The feature matrix for a single sentence.
     """
 
     result = []
@@ -79,7 +79,7 @@ def generate_matrix(sentence):
 
 def build_matrizes(sentences):
     """
-    Build feature matrix for sentences and compressions as labelled data.
+    Build feature matrix for the sentences.
     :param sentences: The sentences.
     :return: A feature matrix
     """
@@ -100,7 +100,7 @@ def build_dataframe(header_row, matrizes):
     Transform the data into a csv DataFrame.
     :param header_row: The column types
     :param matrizes: The sequence matrix
-    :return: The transformed DataFrame
+    :return: The DataFrame Object
     """
     data = []
     for sentence in matrizes:
@@ -109,8 +109,8 @@ def build_dataframe(header_row, matrizes):
                 eos = 1
             else:
                 eos = 0
-            data.append(
-                [sentence[i][0], sentence[i][1], sentence[i][2], sentence[i][3], sentence[i][4], eos])
+            sentence[i].append(eos)
+            data.append(sentence[i])
     indexes = list(range(len(data)))
     dataframe = pd.DataFrame(data=data, index=indexes, columns=header_row)
     return dataframe
